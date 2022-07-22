@@ -41,24 +41,10 @@ export const data = {
         },
     },
     background: {
-        x: 0,
-        y: 90,
-        scale: 0.6,
         startUpX: 675,
         startDownX: 330,
+        y: 90,
+        scale: 0.6,
         step: 115,
-        base1:{
-            x: 10
-        },
-        base2:{
-            x: 10
-        },
-        base3:{
-            x: 10
-        },
-        base4:{
-            x: 10
-        },
-
     }
 }

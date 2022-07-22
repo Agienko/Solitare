@@ -1,5 +1,5 @@
 import {data} from '../../../../data/data.js'
- export const createBtn = (name, x = 0, callback = () =>{console.log('empty')}) => {
+ export const createBtn = (name, x = 0, callback = () =>{console.log('no func')}) => {
 
         const container = new PIXI.Container()
         const sprite = new PIXI.Sprite(name)
