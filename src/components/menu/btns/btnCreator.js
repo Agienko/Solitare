@@ -2,7 +2,7 @@ import {data} from '../../../../data/data.js'
  export const createBtn = (name, x = 0, callback = () =>{console.log('empty')}) => {
 
         const container = new PIXI.Container()
-        let sprite = new PIXI.Sprite(name)
+        const sprite = new PIXI.Sprite(name)
         sprite.anchor.set(0.5)
 
         const mask = new PIXI.Graphics()

@@ -6,7 +6,8 @@ export const data = {
         antialias: true
     },
     menu:{
-        defaultY: 40,
+        x: 0,
+        y: 30,
         btns:{
             maskRadius: 42,
             alpha: 0.9,
@@ -38,5 +39,26 @@ export const data = {
         infoBtn:{
             x:1230
         },
+    },
+    background: {
+        x: 0,
+        y: 90,
+        scale: 0.6,
+        startUpX: 675,
+        startDownX: 330,
+        step: 115,
+        base1:{
+            x: 10
+        },
+        base2:{
+            x: 10
+        },
+        base3:{
+            x: 10
+        },
+        base4:{
+            x: 10
+        },
+
     }
 }
