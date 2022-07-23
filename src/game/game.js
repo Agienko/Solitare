@@ -1,5 +1,5 @@
 
-export const gameDescriptor = {
+export const game = {
     layout: [],
     _layoutSafe: [],
     scopeClose:[],

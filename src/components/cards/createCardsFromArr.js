@@ -1,7 +1,8 @@
 import {createCard} from "./createCard.js";
 
 
-export const createCardsFromArr = (textures, arrCards, toX, toY, speed = 5, isFan = false) =>{
+export const createCardsFromArr =
+    (textures, arrCards, toX, toY = 250, speed = 8, isFan = false) =>{
     let counter = 0
     const container = new PIXI.Container()
     for(let i = 0; i < arrCards.length; i++){
@@ -14,10 +15,12 @@ export const createCardsFromArr = (textures, arrCards, toX, toY, speed = 5, isFa
         container.addChild(card)
         gsap.to(card, {
             pixi: {x: toX, y: toY + ( isFan ? 0 : counter * 35 )},
-            duration: 2,
+            duration: 1,
             delay: ++counter/speed,
             ease: 'Expo.easeOut'
         })
     }
+
+
     return container
 }
