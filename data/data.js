@@ -48,7 +48,9 @@ export const data = {
         step: 115,
     },
     cards: {
-        scale: 0.6
+        scale: 0.6,
+        deltaY: 32
+
     },
     animations:{
         defaultDistSpeed: 10,

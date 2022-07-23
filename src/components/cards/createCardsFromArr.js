@@ -20,7 +20,7 @@ export const createCardsFromArr =
 
         container.addChild(card)
         gsap.to(card, {
-            pixi: {x: toX, y: toY + ( isFan ? 0 : counter * 35 )},
+            pixi: {x: toX, y: toY + ( isFan ? 0 : counter * data.cards.deltaY )},
             duration: data.animations.duration,
             delay: ++counter/speed,
             ease: 'Expo.easeOut'

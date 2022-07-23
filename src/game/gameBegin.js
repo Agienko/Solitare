@@ -4,7 +4,7 @@ import {backgroundContainer} from "../components/background/backgroundContainer.
 import {addAnimatedCards} from "../components/cards/addAnimatedCards.js";
 import {app} from "../app.js";
 
-export function gameBegin(newG = false) {
+export const gameBegin = newG => {
     app.stage.removeChildren();
 
     newG ? gameDescriptor.newGame() : gameDescriptor.replayGame()

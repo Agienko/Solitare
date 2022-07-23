@@ -14,7 +14,7 @@ export function addAnimatedCards (){
     const mask = createCard(BACK_CARD, false, false)
     mask.x = 560
     mask.y = 90
-    mask.zIndex = 8
+    mask.zIndex = 2
     cards.addChild(mask)
 
     for(let i = 1; i <= 7; i++ ){
