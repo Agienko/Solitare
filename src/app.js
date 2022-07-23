@@ -19,6 +19,7 @@ loader.load((i, res) =>{
     const cards = addAnimatedCards(textures)
 
     app.stage.addChild(menu, background, cards)
+    console.log(game)
     });
 
 root.appendChild(app.view)

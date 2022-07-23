@@ -46,5 +46,15 @@ export const data = {
         y: 90,
         scale: 0.6,
         step: 115,
+    },
+    cards: {
+        scale: 0.6
+    },
+    animations:{
+        defaultDistSpeed: 10,
+        defaultDeckSpeed: 28,
+        duration: 0.5,
+        interval: 30,
+        deckDelay: 2
     }
 }

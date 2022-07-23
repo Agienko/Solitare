@@ -1,9 +1,8 @@
 
 export const game = {
     layout: [],
+    layoutOpen: [],
     _layoutSafe: [],
-    scopeClose:[],
-    scopeOpen: [],
     homes: {
         1: [],
         2: [],
@@ -50,6 +49,19 @@ export const game = {
             }
             this.reels[7] = [...this.reels[7], this.layout.pop()]
         }
-
+        for(let i = 1; i <= 7; i++){
+          this.reels[i][this.reels[i].length - 1][1] = true
+        }
+    },
+    translateInOpen(el){
+       let index = this.layout.indexOf(el)
+        this.layoutOpen.push(this.layout.splice(index, 1))
+    },
+    translateFromOpen(){
+        this.layout = [...this.layoutOpen]
+        this.layoutOpen = []
+    },
+    isLayoutEmpty(){
+        return this.layout.length === 0
     }
 }
