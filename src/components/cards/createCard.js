@@ -1,26 +1,27 @@
 import {BACK_CARD, GLOW} from "../../constants/cards.js";
-import {game} from "../../game/game.js";
+import {gameDescriptor} from "../../game/gameDescriptor.js";
 import {cards} from "./addAnimatedCards.js";
 import {colision} from "../../common/colision.js";
+import {app, textures} from "../../app.js";
+import {glowBorderCreator} from "../glowBorderCreator/glowBorderCreator.js";
 
-
-
-export const createCard = (textures, name, isOpen, inDeck) => {
+export const createCard = ( name, isOpen, inDeck) => {
 
     const card = new PIXI.Sprite(isOpen ? name : textures[BACK_CARD])
+    let parent = card.parent
     card.inDeck = inDeck
     card.isOpen = isOpen
-    const glow = new PIXI.Sprite(textures[GLOW])
 
-    glow.anchor.set(0.5)
-    glow.visible = false
-    glow.alpha = 0
+    const glow = glowBorderCreator(GLOW)
+
+    onOut()
     card.addChild(glow)
 
     card.anchor.set(0.5)
     card.scale.set(0.6)
     card.interactive = card.isOpen || card.inDeck;
     card.buttonMode = card.isOpen || card.inDeck;
+
 
     card
     .on('pointerdown', onDragStart)
@@ -34,20 +35,20 @@ export const createCard = (textures, name, isOpen, inDeck) => {
 
     function onDragStart(event) {
         if(card.inDeck){
-
             card.texture = name
             let parent = card.parent
             parent.removeChild(card)
             parent.addChild(card)
 
             let cardName = card.texture.textureCacheIds[0]
-            game.translateInOpen(cardName)
+            gameDescriptor.translateInOpen(cardName)
 
             card.isOpen = true
             card.inDeck = false
             gsap.to(card, {pixi:{x: this.x + 115}, duration: 0.1})
 
         } else {
+            app.stage.addChild(card)
             this.data = event.data;
             this.dragging = true;
             const newPosition = this.data.getLocalPosition(this.parent);
@@ -62,8 +63,6 @@ export const createCard = (textures, name, isOpen, inDeck) => {
     function onDragEnd() {
         //need to inside collizion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if(this.dragging){
-            // card.x = startX
-            // card.y = startY
             gsap.to(card, {pixi:{x: startX, y: startY }, duration: 0.2})
         }
         this.dragging = false;
@@ -76,8 +75,6 @@ export const createCard = (textures, name, isOpen, inDeck) => {
             const newPosition = this.data.getLocalPosition(this.parent);
             this.x = newPosition.x + deltaX
             this.y = newPosition.y + deltaY
-
-            console.log(colision( card,cards.children[2]))
 
         }
     }

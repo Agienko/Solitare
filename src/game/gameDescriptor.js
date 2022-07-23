@@ -1,5 +1,5 @@
 
-export const game = {
+export const gameDescriptor = {
     layout: [],
     layoutOpen: [],
     _layoutSafe: [],
@@ -18,11 +18,14 @@ export const game = {
         6:[],
         7:[],
    },
-    newGame(){
+    _createDeck(){
         const deck = []
         for(let i = 1;i <= 13; i++){
             deck.push(i + 'c', i + 'd',  i + 'h', i + 's')
         }
+        return deck
+    },
+    _clear(){
         this.layoutOpen = []
         this.homes = {
             1: [],
@@ -39,31 +42,20 @@ export const game = {
             6:[],
             7:[],
         }
+    },
+    newGame(){
+        const deck = this._createDeck()
+        this._clear()
         this.layout = deck.sort(() => Math.random() - 0.5)
             .map(i => [i, false])//visible
         this._layoutSafe = [...this.layout]
     },
     replayGame(){
-        this.layoutOpen = []
-        this.homes = {
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-        }
-        this.reels = {
-            1:[],
-            2:[],
-            3:[],
-            4:[],
-            5:[],
-            6:[],
-            7:[],
-        }
+        this._clear()
         this.layout = this._layoutSafe
             .map(i => [i[0], false])//visible
         this._layoutSafe = [...this.layout]
-        console.log(this.layout)
+
     },
     deal(){
         for(let i = 1; i <= 7; i++){
@@ -87,6 +79,7 @@ export const game = {
             }
             this.reels[7] = [...this.reels[7], this.layout.pop()]
         }
+        //open last card in reel
         for(let i = 1; i <= 7; i++){
           this.reels[i][this.reels[i].length - 1][1] = true
         }

@@ -1,8 +1,9 @@
 import {data} from '../../../../data/data.js'
+import {textures} from "../../../app.js";
  export const createBtn = (name, x = 0, callback = () =>{console.log('no func')}) => {
 
         const container = new PIXI.Container()
-        const sprite = new PIXI.Sprite(name)
+        const sprite = new PIXI.Sprite(textures[name])
         sprite.anchor.set(0.5)
 
         const mask = new PIXI.Graphics()
