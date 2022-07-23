@@ -1,6 +1,7 @@
 import {BACK_CARD, GLOW} from "../../constants/cards.js";
 import {game} from "../../game/game.js";
 
+
 export const createCard = (textures, name, isOpen, inDeck) => {
 
     const card = new PIXI.Sprite(isOpen ? name : textures[BACK_CARD])
@@ -26,7 +27,7 @@ export const createCard = (textures, name, isOpen, inDeck) => {
     .on('pointerover', onOver)
     .on('pointerout', onOut);
 
-    let deltaX, deltaY
+    let deltaX, deltaY, startX, startY
 
     function onDragStart(event) {
         if(card.inDeck){
@@ -47,6 +48,8 @@ export const createCard = (textures, name, isOpen, inDeck) => {
             this.data = event.data;
             this.dragging = true;
             const newPosition = this.data.getLocalPosition(this.parent);
+            startX = card.x
+            startY = card.y
             deltaX = card.x - newPosition.x
             deltaY = card.y - newPosition.y
         }
@@ -54,8 +57,15 @@ export const createCard = (textures, name, isOpen, inDeck) => {
     }
 
     function onDragEnd() {
+        //need to inside collizion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if(this.dragging){
+            // card.x = startX
+            // card.y = startY
+            gsap.to(card, {pixi:{x: startX, y: startY }, duration: 0.2})
+        }
         this.dragging = false;
         this.data = null;
+
     }
 
     function onDragMove() {

@@ -48,7 +48,7 @@ export const backgroundContainer = textures => {
             i.texture = textures['back']
             i.inDeck = true
         })
-        gsap.to(cardsInDeck.children, {pixi:{x: this.x }, duration: 0.1, stagger: 0.01})
+        gsap.to(cardsInDeck.children, {pixi:{x: this.x }, duration: 0.05, stagger: 0.01})
         game.translateFromOpen()
     }
     }
@@ -61,8 +61,6 @@ export const backgroundContainer = textures => {
         glow.visible = false
         glow.alpha = 0
     }
-
-
 
     container.addChild(empty)
 

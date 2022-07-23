@@ -27,7 +27,6 @@ export function addAnimatedCards (textures){
     }
 
     setTimeout(() =>{
-        console.log('in....')
         mask.destroy()
         cardsInDeck = createCardsFromArr(
             textures,
