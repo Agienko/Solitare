@@ -14,7 +14,7 @@ body{
     overflow: hidden;
     /*opacity: 0;*/
     transition: opacity 1s linear;
-    /*background-color: #0b9038;*/
+    background-color: #0b9038;
 }
 #root{
     border: 2px dashed white;

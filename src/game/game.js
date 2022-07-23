@@ -18,14 +18,52 @@ export const game = {
         6:[],
         7:[],
    },
-    newLayout(){
+    newGame(){
         const deck = []
         for(let i = 1;i <= 13; i++){
             deck.push(i + 'c', i + 'd',  i + 'h', i + 's')
         }
+        this.layoutOpen = []
+        this.homes = {
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+        }
+        this.reels = {
+            1:[],
+            2:[],
+            3:[],
+            4:[],
+            5:[],
+            6:[],
+            7:[],
+        }
         this.layout = deck.sort(() => Math.random() - 0.5)
             .map(i => [i, false])//visible
         this._layoutSafe = [...this.layout]
+    },
+    replayGame(){
+        this.layoutOpen = []
+        this.homes = {
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+        }
+        this.reels = {
+            1:[],
+            2:[],
+            3:[],
+            4:[],
+            5:[],
+            6:[],
+            7:[],
+        }
+        this.layout = this._layoutSafe
+            .map(i => [i[0], false])//visible
+        this._layoutSafe = [...this.layout]
+        console.log(this.layout)
     },
     deal(){
         for(let i = 1; i <= 7; i++){

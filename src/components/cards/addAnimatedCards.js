@@ -5,17 +5,17 @@ import {BACK_CARD} from "../../constants/cards.js";
 import {createCard} from "./createCard.js";
 
 
-export let cardsInDeck
+export let cards, cardsInDeck
 
 export function addAnimatedCards (textures){
-    const cards = new PIXI.Container()
+    cards = new PIXI.Container()
     cards.sortableChildren = true
     let startX = 330
 
     const mask = createCard(textures, BACK_CARD, false, false)
     mask.x = 560
     mask.y = 90
-    mask.zIndex = 2
+    mask.zIndex = 8
     cards.addChild(mask)
 
     for(let i = 1; i <= 7; i++ ){
@@ -27,7 +27,7 @@ export function addAnimatedCards (textures){
     }
 
     setTimeout(() =>{
-        mask.destroy()
+        cards.removeChild(mask)
         cardsInDeck = createCardsFromArr(
             textures,
             game.layout,

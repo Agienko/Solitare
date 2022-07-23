@@ -1,5 +1,8 @@
 import {BACK_CARD, GLOW} from "../../constants/cards.js";
 import {game} from "../../game/game.js";
+import {cards} from "./addAnimatedCards.js";
+import {colision} from "../../common/colision.js";
+
 
 
 export const createCard = (textures, name, isOpen, inDeck) => {
@@ -73,6 +76,9 @@ export const createCard = (textures, name, isOpen, inDeck) => {
             const newPosition = this.data.getLocalPosition(this.parent);
             this.x = newPosition.x + deltaX
             this.y = newPosition.y + deltaY
+
+            console.log(colision( card,cards.children[2]))
+
         }
     }
 
