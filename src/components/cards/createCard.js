@@ -1,34 +1,42 @@
 import {BACK_CARD, GLOW} from "../../constants/cards.js";
 import {gameDescriptor} from "../../game/gameDescriptor.js";
 import {cards} from "./addAnimatedCards.js";
-import {colision} from "../../common/colision.js";
 import {app, textures} from "../../app.js";
 import {glowBorderCreator} from "../glowBorderCreator/glowBorderCreator.js";
 import {data} from "../../../data/data.js";
+import {reelIndexColision} from "./createCardHelpers/reelIndexColision.js";
+import {isTranslatebleToReel} from "./createCardHelpers/isTranslatebleToReel.js";
 
 
 export const createCard = ( name, isOpen, inDeck) => {
 
+    const container = new PIXI.Container()
+    container.sortableChildren = true
+
     const card = new PIXI.Sprite(isOpen ? name : textures[BACK_CARD])
+
+
+
     let parent
     let reelIndexCurrent = []
 
-    card.name = name
-    card.inDeck = inDeck
-    card.isOpen = isOpen
+    container.name = name
+    container.inDeck = inDeck
+    container.isOpen = isOpen
 
     const glow = glowBorderCreator(GLOW)
 
     onOut()
-    card.addChild(glow)
+    container.addChild(glow)
 
     card.anchor.set(0.5)
+
     card.scale.set(0.6)
-    card.interactive = card.isOpen || card.inDeck;
-    card.buttonMode = card.isOpen || card.inDeck;
+    glow.scale.set(0.6)
+    container.interactive = container.isOpen || container.inDeck;
+    container.buttonMode = container.isOpen || container.inDeck;
 
-
-    card
+    container
     .on('pointerdown', onDragStart)
     .on('pointerup', onDragEnd)
     .on('pointerupoutside', onDragEnd)
@@ -39,30 +47,32 @@ export const createCard = ( name, isOpen, inDeck) => {
     let deltaX, deltaY, startX, startY
 
     function onDragStart(event) {
-        parent = card.parent
-        if(card.inDeck){
-            card.texture = name
+        parent = container.parent
+        if(container.inDeck){
+            container.children[1].texture = container.name
 
-            parent.removeChild(card)
-            parent.addChild(card)
+            // parent.removeChild(container)
+            parent.addChild(container)
+            container
+            console.log()
+            gameDescriptor.translateInOpen(container.name.textureCacheIds[0])
 
-            let cardName = card.texture.textureCacheIds[0]
-            gameDescriptor.translateInOpen(cardName)
-
-            card.isOpen = true
-            card.inDeck = false
-            gsap.to(card, {pixi:{x: this.x + 115}, duration: 0.1})
+            container.isOpen = true
+            container.inDeck = false
+            gsap.to(container, {pixi:{x: this.x + 115}, duration: 0.1})
 
         } else {
-            app.stage.addChild(card)
-
+            // if(container.parent.children.length > 2) container.parent.removeChild(container) ///////////////
+            app.stage.addChild(container)
             this.data = event.data;
+            console.log(event.target)
             this.dragging = true;
             const newPosition = this.data.getLocalPosition(this.parent);
-            startX = card.x
-            startY = card.y
-            deltaX = card.x - newPosition.x
-            deltaY = card.y - newPosition.y
+            startX = container.x
+            startY = container.y
+            deltaX = container.x - newPosition.x
+            deltaY = container.y - newPosition.y
+            console.log(startX)
         }
 
     }
@@ -71,24 +81,31 @@ export const createCard = ( name, isOpen, inDeck) => {
 
         if(this.dragging){
 
-
-            if (isTranslateToReel(reelIndexCurrent, card)){
+            if (isTranslatebleToReel(reelIndexCurrent, container)){
                 //...........................................................
+
                 const currentReel = cards.children[reelIndexCurrent]
 
                 const lastReelCard = currentReel.children[currentReel.children.length - 1]
-                card.x = lastReelCard.x
-                card.y = lastReelCard.y + data.cards.deltaY
-                startX = card.x
-                startY = card.y
 
-                currentReel.addChild(card)
+
+                startX = lastReelCard.x
+
+                startY = container.children[0].y
+                container.x = lastReelCard.children[lastReelCard.children.length - 1].x
+                container.y = lastReelCard.children[lastReelCard.children.length - 1].y + data.cards.deltaY
+
+                //
+                lastReelCard.addChild(container)
+
                 let lastCardInOutReel = parent.children[parent.children.length - 1]
-                lastCardInOutReel.texture = lastCardInOutReel.name
+                lastCardInOutReel.children[1].texture = lastCardInOutReel.name
                 lastCardInOutReel.isOpen = true
+                lastCardInOutReel.interactive = true
+                lastCardInOutReel.buttonMode = true
             } else {
-                gsap.to(card, {pixi:{x: startX, y: startY, },
-                    onComplete: () => parent.addChild(card),
+                gsap.to(container, {pixi:{x: startX, y: startY, },
+                    onComplete: () => parent.addChild(container),
                     duration: 0.2})
             }
 
@@ -101,7 +118,7 @@ export const createCard = ( name, isOpen, inDeck) => {
     function onDragMove() {
         if (this.dragging) {
 
-            reelIndexCurrent = reelIndexesColision(card)
+            reelIndexCurrent = reelIndexColision(container)
 
             const newPosition = this.data.getLocalPosition(this.parent);
             this.x = newPosition.x + deltaX
@@ -120,41 +137,10 @@ export const createCard = ( name, isOpen, inDeck) => {
         glow.alpha = 0
 
     }
-
-    return card
+    container.addChild(card)
+    return container
 }
 
 
-function isTranslateToReel(i, card){
-
-        let res
-        let reel = cards.children[i]
-        let lastCardInReel = reel.children[reel.children.length - 1].texture.textureCacheIds[0]
-        let cardName = card.texture.textureCacheIds[0]
-        let lastCardValue = parseInt(lastCardInReel)
-        let lastCardColor = getCardColor(lastCardInReel.slice(-1))
-        let cardValue = parseInt(cardName)
-        let cardColor = getCardColor(cardName.slice(-1))
-        res = cardColor !== lastCardColor && cardValue + 1 === lastCardValue
-        return res
-
-    function getCardColor(currentCard){
-        return (currentCard === 'c' || currentCard === 's') ? 'black' : 'red'
-    }
 
 
-}
-
-function reelIndexesColision(card){
-    const indexArr = []
-    for(let i = 0; i < 7; i++){
-      indexArr[i] = colision(card, cards.children[i]) ? i: -1
-    }
-    const arrCurrent = indexArr.filter(i => i >= 0)
-    if (arrCurrent.length === 2) {
-        let distance1 = cards.children[arrCurrent[0]].getBounds().x - card.getBounds().x
-        let distance2 = cards.children[arrCurrent[1]].getBounds().x - card.getBounds().x
-        return (distance1  > distance2 ) ? arrCurrent[1] : arrCurrent[0]
-    }
-    return arrCurrent.length === 0 ? -1 : arrCurrent[0]
-}

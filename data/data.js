@@ -1,29 +1,27 @@
 export const data = {
     canvas:{
-        backgroundColor: '0x0b9038',
+        backgroundColor: '0x0a9033',
         width: 1280,
         height: 720,
         antialias: true
     },
-    menu:{
-        x: 0,
+    btns:{
+        x:0,
         y: 30,
-        btns:{
-            maskRadius: 42,
-            alpha: 0.9,
-            scale: 0.45,
-
-            onOver:{
-                pixi:{scale:0.48, alpha: 1},
-                duration: 0.15,
-                ease: 'Power1.easeIn'
-            } ,
-            onOut:{
-                pixi:{scale:0.45, alpha: 0.9},
-                duration: 0.15,
-                ease: 'Power1.easeOut'
-            }
+        maskRadius: 42,
+        alpha: 0.9,
+        scale: 0.45,
+        onOver:{
+            pixi:{scale:0.48, alpha: 1},
+            duration: 0.15,
+            ease: 'Power1.easeIn'
+        } ,
+        onOut:{
+            pixi:{scale:0.45, alpha: 0.9},
+            duration: 0.15,
+            ease: 'Power1.easeOut'
         },
+
         newGameBtn:{
             x:50
         },
@@ -40,23 +38,23 @@ export const data = {
             x:1230
         },
     },
-    background: {
-        startUpX: 675,
-        startDownX: 330,
-        y: 90,
-        scale: 0.6,
+    homes:{
+        startX: 605,
         step: 115,
+        y: 10
     },
+    reels:{
+        startX: 375,
+        step: 115,
+        y: 170
+    },
+
     cards: {
+        startPositionX: 490,
+        startPositionY: 10,
         scale: 0.6,
         deltaY: 32
 
     },
-    animations:{
-        defaultDistSpeed: 10,
-        defaultDeckSpeed: 28,
-        duration: 0.5,
-        interval: 30,
-        deckDelay: 2
-    }
+
 }

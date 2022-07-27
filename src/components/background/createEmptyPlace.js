@@ -1,4 +1,4 @@
-import {createBgSprite} from "./bgTextureCreator.js";
+import {createBgSprite} from "./createBgSprite.js";
 import {EMPTY} from "../../constants/background.js";
 import {data} from "../../../data/data.js";
 import {GLOW} from "../../constants/cards.js";
@@ -27,7 +27,7 @@ export function createEmptyPlace() {
     function onDown(){
         if(gameDescriptor.isLayoutEmpty()){
             cardsInDeck.children.reverse().map(i => {
-                i.texture = textures['back']
+                i.children[1].texture = textures['back']
                 i.inDeck = true
             })
             gsap.to(cardsInDeck.children, {pixi:{x: this.x }, duration: 0.05, stagger: 0.01})

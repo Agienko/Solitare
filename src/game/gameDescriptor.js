@@ -52,7 +52,7 @@ export const gameDescriptor = {
     },
     replayGame(){
         this._clear()
-        this.layout = this._layoutSafe
+        this.layout = [...this._layoutSafe]
             .map(i => [i[0], false])//visible
         this._layoutSafe = [...this.layout]
 

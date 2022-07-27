@@ -11,9 +11,8 @@ body{
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    opacity: 0;
+    /*opacity: 0;*/
     transition: opacity 1s linear;
-    /*background-color: #0b9038;*/
 }
 #root{
     position: absolute;

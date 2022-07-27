@@ -1,8 +1,9 @@
 import {gameDescriptor} from "./gameDescriptor.js";
-import {menuCreator} from "../components/menu/menu.js";
-import {backgroundContainer} from "../components/background/backgroundContainer.js";
+
+import {backgroundCreator} from "../components/background/backgroundCreator.js";
 import {addAnimatedCards} from "../components/cards/addAnimatedCards.js";
 import {app} from "../app.js";
+
 
 export const gameBegin = newG => {
     app.stage.removeChildren();
@@ -10,10 +11,10 @@ export const gameBegin = newG => {
     newG ? gameDescriptor.newGame() : gameDescriptor.replayGame()
     gameDescriptor.deal()
 
-    const menu = menuCreator()
-    const background = backgroundContainer()
+    gameDescriptor2.btns.map(btn => btn.addToStage())
+    const background = backgroundCreator()
     const cards = addAnimatedCards()
 
-    app.stage.addChild(menu, background, cards)
+    app.stage.addChild( background, cards)
 
 }

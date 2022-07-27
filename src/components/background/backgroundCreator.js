@@ -1,9 +1,9 @@
-import {createBgSprite} from "./bgTextureCreator.js";
+import {createBgSprite} from "./createBgSprite.js";
 import {BASE_FOUNDATION, BASE_GRADIENT, EMPTY} from "../../constants/background.js";
 import {data} from "../../../data/data.js";
 import {createEmptyPlace} from "./createEmptyPlace.js";
 
-export const backgroundContainer = () => {
+export const backgroundCreator = () => {
 
     const container = new PIXI.Container()
 
