@@ -16,10 +16,7 @@ loader.load((i, res) => {
     // gameBegin(true)
     game = gameCreator()
     game.btns.map(btn => btn.addToStage())
-    game.newLayout()
         game.init()
-        game.deal()
-
     })
 
 root.appendChild(app.view)
