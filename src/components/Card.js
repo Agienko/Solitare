@@ -5,6 +5,7 @@ import {DeckOpen} from "./DeckOpen.js";
 import {isAtHome} from "../common/homeTranslateHelpers.js";
 import {Reel} from "./Reel.js";
 import {isAtReel} from "../common/reelTranslateHelpers.js";
+import {Cortage} from "./Cortage.js";
 
 
 
@@ -17,6 +18,10 @@ export class Card extends PIXI.Sprite{
         this.openTexture = this.texture
         this.scale.set(0.6)
         this.close()
+
+        this.cortaging = false
+        this.cortage = []
+
 
         this.glow = new Glow()
         this.addChild(this.glow)
@@ -36,13 +41,29 @@ export class Card extends PIXI.Sprite{
             ? game.deckOpen.y
             : this.parent.y + (this.parent.children.length - 2  ) * 35
 
-        console.log(this.parent instanceof Reel )
-        app.stage.addChild(this)
-        this.zIndex = 10
-        this.position.set(parentX, parentY)
+        if(parent.children.indexOf(this) === parent.children.length - 1 ) { //is single Card
+            app.stage.addChild(this)
+            this.zIndex = 10
+            this.position.set(parentX, parentY)
+
+        } else { //is cortage
+
+            this.cortaging = true
+            let cortageSize = parent.children.indexOf(this) - parent.children.length
+
+            parentY = parent.children[parent.children.indexOf(this)].y
+
+            this.cortage = [...parent.children.slice(cortageSize)]
+
+            app.stage.addChild(...this.cortage)
+            this.cortage.forEach((card, i) => {
+                card.x = parentX
+                card.y = parentY + 170 + (i)*35
+                card.zIndex = 10
+            })
+        }
         this.data = event.data;
         this.dragging = true;
-
         const newPosition = this.data.getLocalPosition(this.parent);
 
         startX = this.x
@@ -54,44 +75,81 @@ export class Card extends PIXI.Sprite{
         if (this.dragging) {
 
             const newPosition = this.data.getLocalPosition(this.parent);
-            this.x = newPosition.x + deltaX
-            this.y = newPosition.y + deltaY
+
+            if(this.cortaging){
+                this.cortage.forEach((card, i) => {
+                    card.x = newPosition.x + deltaX
+                    card.y = newPosition.y + deltaY + i*35
+                })
+            } else{
+                this.x = newPosition.x + deltaX
+                this.y = newPosition.y + deltaY
+            }
         }
     }
     onDragEnd(){
-        if(this.dragging){
+        if(this.dragging && !this.cortaging) {
             let backCardFlag = true
             game.homes.forEach(home => {
-                if(isAtHome(this, home)){
-                    this.position.set(0,0)
+                if (isAtHome(this, home)) {
+                    this.position.set(0, 0)
                     home.addChild(this)
                     backCardFlag = false
-                    if (parent instanceof Reel && !parent.isEmpty())  parent.last().open()
+                    if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
                 }
             })
 
-            game.reels.forEach(reel =>{
-                if(isAtReel(this, reel)) {
+            game.reels.forEach(reel => {
+                if (isAtReel(this, reel)) {
                     this.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
                     reel.addChild(this)
                     backCardFlag = false
-                    if (parent instanceof Reel && !parent.isEmpty())  parent.last().open()
+                    if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
                 }
             })
 
-            if(backCardFlag)  {
-                gsap.to(this, {pixi:{x: startX, y: startY, },
+            if (backCardFlag) {
+                gsap.to(this, {
+                    pixi: {x: startX, y: startY,},
                     onComplete: () => {
                         this.x = 0
                         this.y = parent instanceof DeckOpen
                             ? 0
-                            : 35*(parent.children.length - 1 ) ;
+                            : 35 * (parent.children.length - 1);
                         parent.addChild(this)
                     },
                     duration: 0.2
                 })
             }
+        }
+            if(this.dragging && this.cortaging){ //with cortage
+                let backCortageFlag = true
 
+                game.reels.forEach(reel =>{
+                    if(isAtReel(this, reel)) {
+                        this.cortage.forEach((card, i) => {
+                            card.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
+                            reel.addChild(card)
+
+
+                        })
+                        backCortageFlag = false
+                        if (parent instanceof Reel && !parent.isEmpty())  parent.last().open()
+                    }
+                })
+
+                if(backCortageFlag)  {
+                    this.cortage.forEach((card, i) => {
+                        gsap.to(card, {pixi:{x: startX, y: startY + i*35, },
+                            onComplete: () => {
+                                    card.x = 0
+                                    card.y = 35*(parent.children.length - 1 ) ;
+                                    parent.addChild(card)
+                            },
+                            duration: 0.2
+                        })
+                    })
+                }
 
         }
         this.dragging = false;
