@@ -1,7 +1,7 @@
 import {data} from '../data/data.js'
 import {loader} from "./loader/loader.js";
 import {gameBegin} from "./game/gameBegin.js";
-import {gameCreator} from "./game/gameDescriptor2.js";
+import {gameCreator} from "./game/gameDescriptor.js";
 
 import {BACK_BTN, NEW_GAME_BTN, REPLAY_BTN} from "./constants/btns.js";
 

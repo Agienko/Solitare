@@ -30,4 +30,13 @@ export class Reel extends PIXI.Container{
     verticalAlignCards(){
         this.children.forEach((card, i) => card.y = i >0 ? (i-1)*35 : 0)
     }
+    isEmpty(){
+      return this.children.length === 1
+    }
+    last() {
+        if (!this.isEmpty()) {
+            return this.children[this.children.length - 1]
+        }
+    }
+
 }
