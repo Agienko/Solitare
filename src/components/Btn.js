@@ -15,19 +15,22 @@ export class Btn extends PIXI.Container{
 
         this.sprite.mask = this.mask
         this.addChild(this.sprite, this.mask)
-        this.x = x
-        this.y = data.btns.y
+        this.position.set(x, data.btns)
+
         this.alpha = 0.9
         this.interactive = true;
         this.buttonMode = true;
 
-        this.on('pointerover', () => gsap.to(this, data.btns.onOver));
-        this.on('pointerout', () => gsap.to(this, data.btns.onOut));
-        this.on('pointerdown', callback);
         this.scale.set(data.btns.scale)
-    }
-    addToStage(){
-        app.stage.addChild(this)
-    }
 
+        this.on('pointerover', this.onOver);
+        this.on('pointerout', this.onOut);
+        this.on('pointerdown', callback);
+    }
+    onOver(){
+        gsap.to(this, data.btns.onOver)
+    }
+    onOut(){
+        gsap.to(this, data.btns.onOut)
+    }
 }

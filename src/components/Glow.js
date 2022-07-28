@@ -1,8 +1,6 @@
 import {textures} from "../app.js";
 import {GLOW} from "../constants/cards.js";
 
-
-
 export class Glow extends PIXI.Sprite{
     constructor(params) {
         super(params)

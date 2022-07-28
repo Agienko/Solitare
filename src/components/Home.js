@@ -11,7 +11,6 @@ export class Home extends PIXI.Container{
         this.emptyImage = new PIXI.Sprite(textures[BASE_FOUNDATION])
         this.emptyImage.scale.set(0.6)
         this.addChild(this.emptyImage)
-
     }
     last(){
         return this.children[this.children .length -1]

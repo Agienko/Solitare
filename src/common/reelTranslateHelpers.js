@@ -1,11 +1,9 @@
 import {colision} from "./colision.js";
 
-
-
 const isCorrectColor = (card, reel) => {
     return card.getColor() !== card.getColor(reel.last())
 }
- const isCorrectNumber = (card, reel) => {
+const isCorrectNumber = (card, reel) => {
     return card.getNumber() + 1 === card.getNumber(reel.last())
 }
 

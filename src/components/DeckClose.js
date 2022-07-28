@@ -15,7 +15,6 @@ export class DeckClose extends PIXI.Container{
         this.glow.position.set(-2, -2)
         this.addChild(this.glow)
 
-
         this.zIndex = 2
         this.interactive = true
         this.buttonMode = true
@@ -24,13 +23,16 @@ export class DeckClose extends PIXI.Container{
             .on('pointerover', this.onOver)
             .on('pointerout', this.onOut)
     }
-    animate(delay){
+    animate(delay, callback = function (){}){
         gsap.from(this.children.slice(1), {
             pixi:{x: 230},
             delay: delay,
             stagger: 0.05 ,
             ease:'Expo.easeOut',
             duration: 0.5,
+            onComplete(){
+                callback()
+            }
         })
     }
     onDown(){
