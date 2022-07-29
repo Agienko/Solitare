@@ -23,7 +23,7 @@ export const winAnimation =() =>{
 
    app.stage.addChild(winSceneAnimation)
 
-   if(!game.checkWin()){
+   if(game.checkWin()){
       mainMusic.pause()
       winMusic.currentTime = 0
       winMusic.play()
