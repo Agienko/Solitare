@@ -18,4 +18,7 @@ export class Home extends PIXI.Container{
     isEmpty(){
         return this.children.length === 1
     }
+    isFool(){
+        return this.children.length  === 14
+    }
 }

@@ -1,6 +1,6 @@
 export const data = {
     canvas:{
-        backgroundColor: '0x0a9033',
+        backgroundColor: '0x008732',
         width: 1280,
         height: 720,
         antialias: true

@@ -8,18 +8,20 @@ import {DeckClose} from "../components/DeckClose.js";
 import {DeckOpen} from "../components/DeckOpen.js";
 import {Home} from "../components/Home.js";
 import {Reel} from "../components/Reel.js";
+import {removeWinAnimation, winAnimation} from "../animations/winAnimation.js";
+import {mainMusic, reloadDeck} from "../sounds/sounds.js";
 
 
 export class Game {
     constructor() {
-        this._deck = new Deck()
+        this.deck = new Deck()
         this.layout = []
         this.maskCard = new MaskCard()
         this.btns = [
         new Btn(NEW_GAME_BTN, data.btns.newGameBtn.x, () => this.newGame()),
         new Btn(REPLAY_BTN, data.btns.replayBtn.x, () => this.replayGame()),
         new Btn(BACK_BTN, data.btns.backBtn.x),
-        new Btn(SOUND_BTN, data.btns.soundBtn.x),
+        new Btn(SOUND_BTN, data.btns.soundBtn.x, () => this.btns[3].toggleSound()),
         new Btn(INGO_BTN, data.btns.infoBtn.x)
     ]
         this.deckClose = new DeckClose()
@@ -45,29 +47,36 @@ export class Game {
         this.homes.forEach(home=> app.stage.addChild(home))
         this.reels.forEach(reel => app.stage.addChild(reel))
         app.stage.addChild(this.deckClose, this.deckOpen, this.maskCard)
-        this.newGame()
+        // this.newGame()
     }
     newGame() {
-        this._deck.destroyCards()
-        this._deck = new Deck()
-        this.layout = this._deck.newLayout()
+        this.deck.destroyCards()
+        this.deck = new Deck()
+        this.layout = this.deck.newLayout()
+        removeWinAnimation()
         this.deal()
+        mainMusic.currentTime = 0
+        mainMusic.play()
 
     }
     replayGame(){
-        if(this._deck.saveTextures.length > 0){
-            this._deck.destroyCards()
-            this.layout = this._deck.replayLayout()
+        if(this.deck.saveTextures.length > 0){
+            this.deck.destroyCards()
+            this.layout = this.deck.replayLayout()
+            removeWinAnimation()
             this.deal()
         }
     }
     deal() {
         this._addCardsToReel()
         this._addCardsToCloseDeck()
-        const reelDelayArr = [0.1, 0.3, 0.4, 0.7, 1.1, 1.6, 2.2]
+        reloadDeck.currentTime = 0
+        reloadDeck.play()
+
+        const reelDelayArr = [0, 0.1, 0.2, 0.4, 0.7, 1.1, 1.4]
         reelDelayArr.forEach((delay, i) => this.reels[i].animate(delay))
-        this.deckClose.animate(2.8, this._unblockBtns.bind(this))
-        this.maskCard.hide(2.9)
+        this.deckClose.animate(1.6, this._unblockBtns.bind(this))
+        this.maskCard.hide(2.0)
         this._blockBtns()
     }
     _blockBtns(){
@@ -87,5 +96,9 @@ export class Game {
     }
     _addCardsToCloseDeck() {
         this.layout.forEach(card => this.deckClose.addChild(card))
+    }
+    checkWin(){
+        const homes = this.homes.map(home => home.isFool()).filter(i => i)
+        return homes.length === 4
     }
 }

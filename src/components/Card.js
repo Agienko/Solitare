@@ -4,9 +4,10 @@ import {isAtHome} from "../common/homeTranslateHelpers.js";
 import {isAtReel} from "../common/reelTranslateHelpers.js";
 import {Glow} from "./Glow.js";
 import {DeckOpen} from "./DeckOpen.js";
-import {DeckClose} from "./DeckClose.js";
 import {Reel} from "./Reel.js";
 import {Home} from "./Home.js";
+import {winAnimation} from "../animations/winAnimation.js";
+import {backCardSound, cardTake, clickSound} from "../sounds/sounds.js";
 
 
 let deltaX, deltaY, startX, startY, parent, parentX, parentY
@@ -70,6 +71,9 @@ export class Card extends PIXI.Sprite {
         }
         this.data = event.data;
         this.dragging = true;
+        clickSound.play()
+
+
         const newPosition = this.data.getLocalPosition(this.parent);
         startX = this.x
         startY = this.y
@@ -83,7 +87,7 @@ export class Card extends PIXI.Sprite {
             const newPosition = this.data.getLocalPosition(this.parent);
 
             if (this.cortaging) {
-                console.log('CORTAGE!!!!!!!!!!')
+
                 this.cortage.forEach((card, i) => {
                     card.x = newPosition.x + deltaX
                     card.y = newPosition.y + deltaY + i * 35
@@ -101,9 +105,11 @@ export class Card extends PIXI.Sprite {
             game.homes.forEach(home => {
                 if (isAtHome(this, home)) {
                     this.position.set(0, 0)
+                    cardTake.play()
                     home.addChild(this)
                     backCardFlag = false
                     if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
+                    winAnimation()
                 }
             })
 
@@ -111,12 +117,15 @@ export class Card extends PIXI.Sprite {
                 if (isAtReel(this, reel)) {
                     this.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
                     reel.addChild(this)
+                    cardTake.play()
                     backCardFlag = false
                     if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
                 }
             })
 
             if (backCardFlag) {
+                backCardSound.currentTime = 0
+                backCardSound.play()
                 gsap.to(this, {
                     pixi: {x: startX, y: startY},
                     onComplete: () => {
@@ -126,7 +135,7 @@ export class Card extends PIXI.Sprite {
                         } else {
                             this.y = 35 * (parent.children.length - 1);
                         }
-
+                        backCardSound.pause()
                         parent.addChild(this)
                     },
                     duration: 0.2
@@ -150,12 +159,15 @@ export class Card extends PIXI.Sprite {
             })
 
             if (backCortageFlag) {
+                backCardSound.currentTime = 0
+                backCardSound.play()
                 this.cortage.forEach((card, i) => {
                     gsap.to(card, {
                         pixi: {x: startX, y: startY + i * 35,},
                         onComplete: () => {
                             card.x = 0
                             card.y = 35 * (parent.children.length - 1);
+                            backCardSound.pause()
                             parent.addChild(card)
 
                             this.cortage = []
@@ -169,6 +181,8 @@ export class Card extends PIXI.Sprite {
 
         }
         this.dragging = false;
+
+
         this.data = null;
     }
 

@@ -21,7 +21,7 @@ export class Reel extends PIXI.Container{
                 y:  this.y - 330
             },
             delay: delay,
-            stagger: 0.1 ,
+            stagger: 0.07 ,
             ease:'Expo.easeOut',
             duration: this.children.slice(1).length/7,
         })
