@@ -8,6 +8,7 @@ export const data = {
     btns:{
         x:0,
         y: 30,
+        startAlpha: 0.9,
         maskRadius: 42,
         alpha: 0.9,
         scale: 0.45,
@@ -37,6 +38,33 @@ export const data = {
         infoBtn:{
             x:1230
         },
+    },
+    deckClose:{
+        zIndex: 2,
+        position:{
+          x:260,
+          y:10,
+        },
+        glow:{
+            x:-2,
+            y:-2
+        }
+    },
+    deckOpen:{
+        position: {
+            x: 375,
+            y:10,
+        }
+    },
+    glow:{
+        alpha: 0.5,
+        position:{
+            x:-5,
+            y:-5
+        }
+    },
+    maskCard:{
+        zIndex: 200
     },
     homes:{
         startX: 605,

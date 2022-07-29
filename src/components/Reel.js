@@ -10,8 +10,8 @@ export class Reel extends PIXI.Container{
         this.x = data.reels.startX + (number - 2) * data.reels.step
         this.y = data.reels.y
         this.emptyImage = new PIXI.Sprite(textures[BASE_GRADIENT])
-        this.emptyImage.scale.set(0.6)
-        this.emptyImage.avi
+        this.emptyImage.scale.set(data.cards.scale)
+
         this.addChild(this.emptyImage)
     }
     animate(delay = 0){

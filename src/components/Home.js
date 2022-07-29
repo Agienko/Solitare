@@ -9,7 +9,7 @@ export class Home extends PIXI.Container{
         this.x = data.homes.startX + (number - 1) * data.homes.step
         this.y = data.homes.y
         this.emptyImage = new PIXI.Sprite(textures[BASE_FOUNDATION])
-        this.emptyImage.scale.set(0.6)
+        this.emptyImage.scale.set(data.cards.scale)
         this.addChild(this.emptyImage)
     }
     last(){

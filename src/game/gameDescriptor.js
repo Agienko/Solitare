@@ -41,6 +41,7 @@ export class Game {
     ]
     }
     init() {
+        console.log('12131')
         this.btns.forEach(btn => app.stage.addChild(btn))
         this.homes.forEach(home=> app.stage.addChild(home))
         this.reels.forEach(reel => app.stage.addChild(reel))

@@ -1,4 +1,4 @@
-import {app, textures} from "../app.js";
+import {textures} from "../app.js";
 import {data} from "../../data/data.js";
 
 export class Btn extends PIXI.Container{
@@ -15,14 +15,13 @@ export class Btn extends PIXI.Container{
 
         this.sprite.mask = this.mask
         this.addChild(this.sprite, this.mask)
-        this.position.set(x, data.btns)
+        this.position.set(x, data.btns.y)
 
-        this.alpha = 0.9
+        this.alpha = data.btns.startAlpha
         this.interactive = true;
         this.buttonMode = true;
 
         this.scale.set(data.btns.scale)
-
         this.on('pointerover', this.onOver);
         this.on('pointerout', this.onOut);
         this.on('pointerdown', callback);

@@ -6,10 +6,10 @@ export class MaskCard extends PIXI.Sprite{
     constructor(params) {
         super(params)
         this.texture = textures[BACK_CARD]
-        this.scale.set(0.6)
+        this.scale.set(data.cards.scale)
         this.position.set(data.cards.startPositionX, data.cards.startPositionY)
         app.stage.sortableChildren = true
-        this.zIndex = 200
+        this.zIndex = data.maskCard.zIndex
     }
     hide(delay){
         setTimeout(() => this.visible = false, delay*1000)

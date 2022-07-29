@@ -1,21 +1,22 @@
 import {game, textures} from "../app.js";
 import {EMPTY} from "../constants/background.js";
 import {Glow} from "./Glow.js";
+import {data} from "../../data/data.js";
 
 export class DeckClose extends PIXI.Container{
     constructor() {
         super()
-        this.position.set(260, 10)
+        this.position.set(data.deckClose.position.x,data.deckClose.position.y)
         this.empty = new PIXI.Sprite(textures[EMPTY])
-        this.empty.scale.set(0.6)
+        this.empty.scale.set(data.cards.scale)
         this.addChild(this.empty)
 
         this.glow = new Glow()
-        this.glow.scale.set(0.6)
-        this.glow.position.set(-2, -2)
+        this.glow.scale.set(data.cards.scale)
+        this.glow.position.set(data.deckClose.glow.x, data.deckClose.glow.x)
         this.addChild(this.glow)
 
-        this.zIndex = 2
+        this.zIndex = data.deckClose.zIndex
         this.interactive = true
         this.buttonMode = true
         this

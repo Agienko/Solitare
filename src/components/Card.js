@@ -5,6 +5,8 @@ import {isAtReel} from "../common/reelTranslateHelpers.js";
 import {Glow} from "./Glow.js";
 import {DeckOpen} from "./DeckOpen.js";
 import {Reel} from "./Reel.js";
+import {Home} from "./Home.js";
+import {DeckClose} from "./DeckClose";
 
 let deltaX, deltaY, startX, startY, parent, parentX, parentY
 
@@ -30,19 +32,26 @@ export class Card extends PIXI.Sprite {
     }
 
     onDragStart(event) {
-
+        console.log(
+            if(this instanceof DeckClose)
+        )
         parent = this.parent
         parentX = this.parent.x
         parentY = this.parent instanceof DeckOpen
             ? game.deckOpen.y
             : this.parent.y + (this.parent.children.length - 2) * 35
 
-        if (parent.children.indexOf(this) === parent.children.length - 1) { //is single Card
+        if ((parent.children.indexOf(this) === parent.children.length - 1) && !(parent instanceof Home)) { //is single Card
+            this.position.set(parentX, parentY)
             app.stage.addChild(this)
             this.zIndex = 10
-            this.position.set(parentX, parentY)
 
-        } else { //is cortage
+
+        } else if(parent instanceof Home){
+            this.position.set(parentX, this.parent.y)
+            app.stage.addChild(this)
+
+        } else{ //is cortage
 
             this.cortaging = true
             let cortageSize = parent.children.indexOf(this) - parent.children.length
@@ -108,12 +117,15 @@ export class Card extends PIXI.Sprite {
 
             if (backCardFlag) {
                 gsap.to(this, {
-                    pixi: {x: startX, y: startY,},
+                    pixi: {x: startX, y: startY},
                     onComplete: () => {
                         this.x = 0
-                        this.y = parent instanceof DeckOpen
-                            ? 0
-                            : 35 * (parent.children.length - 1);
+                        if (parent instanceof Home || parent instanceof DeckOpen){
+                            this.y = 0
+                        } else {
+                            this.y = 35 * (parent.children.length - 1);
+                        }
+
                         parent.addChild(this)
                     },
                     duration: 0.2
