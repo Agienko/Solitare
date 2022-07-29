@@ -1,0 +1,56 @@
+.poapWrapper{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*background-color: cadetblue;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popapWindow{
+    font-family: sans-serif;
+    /*width: 70%;*/
+    /*height: 70%;*/
+    margin: 10px;
+    min-width: 400px;
+    min-height: 200px;
+    background-color: antiquewhite;
+    border-radius: 12px;
+    border: 3px solid #092d01;
+    box-shadow: 2px 2px 5px rgb(9, 38, 1);
+}
+.popapWindow header {
+    color: white;
+    font-size: 17px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    padding: 5px 10px;
+    margin: 2px;
+    justify-content: space-between;
+    background-color: #255f18;
+}
+.headerClose{
+    user-select: none;
+    cursor: pointer;
+    transition: transform .2s linear;
+}
+.headerClose:hover{
+    transform: scale(1.1);
+}
+
+.popapWindow main{
+    padding: 20px;
+}
+.popapWindow li{
+    list-style-position: inside;
+    padding-left: 10px;
+}
+
+.popapWindow main  h3{
+margin-top: 20px;
+}
+.popapWindow footer{
+    margin: 30px;
+}

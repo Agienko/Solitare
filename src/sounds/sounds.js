@@ -1,6 +1,5 @@
 
 
-
 export const cardTake = new Audio();
 cardTake.src = '../res/sounds/card_take.mp3';
 cardTake.volume = 0.5;

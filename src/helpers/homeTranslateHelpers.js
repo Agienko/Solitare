@@ -1,4 +1,4 @@
-import {colision} from "./colision.js";
+import {colision} from "../common/colision.js";
 
 const isFirstCardCorrect = (card, home) => {
     return home.children.length === 1 && card.getNumber() === 1

@@ -1,4 +1,4 @@
-import {colision} from "./colision.js";
+import {colision} from "../common/colision.js";
 
 const isCorrectColor = (card, reel) => {
     return card.getColor() !== card.getColor(reel.last())

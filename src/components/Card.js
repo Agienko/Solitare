@@ -1,7 +1,7 @@
 import {app, game, textures} from "../app.js";
-import {BACK_CARD, BLACK_CARD_COLOR, RED_CARD_COLOR} from "../constants/cards.js";
-import {isAtHome} from "../common/homeTranslateHelpers.js";
-import {isAtReel} from "../common/reelTranslateHelpers.js";
+import {BACK_CARD, BLACK_CARD_COLOR, RED_CARD_COLOR} from "../constants/constants.js";
+import {isAtHome} from "../helpers/homeTranslateHelpers.js";
+import {isAtReel} from "../helpers/reelTranslateHelpers.js";
 import {Glow} from "./Glow.js";
 import {DeckOpen} from "./DeckOpen.js";
 import {Reel} from "./Reel.js";
@@ -16,12 +16,13 @@ export class Card extends PIXI.Sprite {
 
     constructor(params) {
         super(params)
-        this.openTexture = this.texture
-        this.scale.set(0.6)
-        this.close()
 
+        this.openTexture = this.texture
         this.cortaging = false
         this.cortage = []
+
+        this.scale.set(0.6)
+        this.close()
 
         this.glow = new Glow()
         this.addChild(this.glow)
@@ -35,8 +36,6 @@ export class Card extends PIXI.Sprite {
     }
 
     onDragStart(event) {
-
-
         parent = this.parent
         parentX = this.parent.x
         parentY = this.parent instanceof DeckOpen
@@ -47,7 +46,6 @@ export class Card extends PIXI.Sprite {
             this.position.set(parentX, parentY)
             app.stage.addChild(this)
             this.zIndex = 10
-
 
         } else if(parent instanceof Home){
             this.position.set(parentX, this.parent.y)
@@ -72,7 +70,6 @@ export class Card extends PIXI.Sprite {
         this.data = event.data;
         this.dragging = true;
         clickSound.play()
-
 
         const newPosition = this.data.getLocalPosition(this.parent);
         startX = this.x
@@ -172,17 +169,13 @@ export class Card extends PIXI.Sprite {
 
                             this.cortage = []
                             this.cortaging = false
-
                         },
                         duration: 0.2
                     })
                 })
             }
-
         }
         this.dragging = false;
-
-
         this.data = null;
     }
 
@@ -220,4 +213,11 @@ export class Card extends PIXI.Sprite {
     getSuit(card = this) {
         return card.texture.textureCacheIds[0].slice(-1)
     }
+
+}
+
+
+
+function endForSingleCards(){
+
 }

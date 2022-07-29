@@ -1,5 +1,0 @@
-export const NEW_GAME_BTN = 'new_game_btn'
-export const REPLAY_BTN = 'replay_btn'
-export const BACK_BTN = 'back_btn'
-export const SOUND_BTN = 'sound_btn'
-export const INGO_BTN = 'info_btn'

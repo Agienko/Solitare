@@ -1,6 +1,6 @@
 import {data} from "../../data/data.js";
 import {textures} from "../app.js";
-import {BASE_FOUNDATION} from "../constants/background.js";
+import {BASE_FOUNDATION} from "../constants/constants.js";
 
 export class Home extends PIXI.Container{
 
@@ -12,13 +12,18 @@ export class Home extends PIXI.Container{
         this.emptyImage.scale.set(data.cards.scale)
         this.addChild(this.emptyImage)
     }
+
     last(){
         return this.children[this.children .length -1]
     }
+
     isEmpty(){
         return this.children.length === 1
     }
+
     isFool(){
         return this.children.length  === 14
     }
+
 }
+

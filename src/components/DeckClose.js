@@ -1,10 +1,11 @@
 import {game, textures} from "../app.js";
-import {EMPTY} from "../constants/background.js";
+import {EMPTY} from "../constants/constants.js";
 import {Glow} from "./Glow.js";
 import {data} from "../../data/data.js";
 import {backCardSound, reloadDeck} from "../sounds/sounds.js";
 
 export class DeckClose extends PIXI.Container{
+
     constructor() {
         super()
         this.position.set(data.deckClose.position.x,data.deckClose.position.y)
@@ -26,6 +27,7 @@ export class DeckClose extends PIXI.Container{
             .on('pointerover', this.onOver)
             .on('pointerout', this.onOut)
     }
+
     animate(delay, callback = function (){}){
 
         gsap.from(this.children.slice(1), {
@@ -43,6 +45,7 @@ export class DeckClose extends PIXI.Container{
             }
         })
     }
+
     onDown(){
         const interactiveOn = () => this.interactive = true
         this.interactive = false
@@ -92,10 +95,12 @@ export class DeckClose extends PIXI.Container{
             interactiveOn()
         }
     }
+
     onOver(){
         this.glow.visible = true
         this.glow.alpha = 0.5
     }
+
     onOut(){
         this.glow.visible = false
         this.glow.alpha = 0
