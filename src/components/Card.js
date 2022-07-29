@@ -4,13 +4,15 @@ import {isAtHome} from "../common/homeTranslateHelpers.js";
 import {isAtReel} from "../common/reelTranslateHelpers.js";
 import {Glow} from "./Glow.js";
 import {DeckOpen} from "./DeckOpen.js";
+import {DeckClose} from "./DeckClose.js";
 import {Reel} from "./Reel.js";
 import {Home} from "./Home.js";
-import {DeckClose} from "./DeckClose";
+
 
 let deltaX, deltaY, startX, startY, parent, parentX, parentY
 
 export class Card extends PIXI.Sprite {
+
     constructor(params) {
         super(params)
         this.openTexture = this.texture
@@ -32,9 +34,8 @@ export class Card extends PIXI.Sprite {
     }
 
     onDragStart(event) {
-        console.log(
-            if(this instanceof DeckClose)
-        )
+
+
         parent = this.parent
         parentX = this.parent.x
         parentY = this.parent instanceof DeckOpen
@@ -70,7 +71,6 @@ export class Card extends PIXI.Sprite {
         this.data = event.data;
         this.dragging = true;
         const newPosition = this.data.getLocalPosition(this.parent);
-
         startX = this.x
         startY = this.y
         deltaX = this.x - newPosition.x
@@ -83,6 +83,7 @@ export class Card extends PIXI.Sprite {
             const newPosition = this.data.getLocalPosition(this.parent);
 
             if (this.cortaging) {
+                console.log('CORTAGE!!!!!!!!!!')
                 this.cortage.forEach((card, i) => {
                     card.x = newPosition.x + deltaX
                     card.y = newPosition.y + deltaY + i * 35
@@ -141,6 +142,8 @@ export class Card extends PIXI.Sprite {
                         card.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
                         reel.addChild(card)
                     })
+                    this.cortage = []
+                    this.cortaging = false
                     backCortageFlag = false
                     if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
                 }
@@ -154,6 +157,10 @@ export class Card extends PIXI.Sprite {
                             card.x = 0
                             card.y = 35 * (parent.children.length - 1);
                             parent.addChild(card)
+
+                            this.cortage = []
+                            this.cortaging = false
+
                         },
                         duration: 0.2
                     })
