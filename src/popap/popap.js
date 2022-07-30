@@ -45,6 +45,5 @@ function closePopap(e){
 }
 
 export function openPopap() {
-    clickSound.play()
     gsap.to(popap, { scale: 1, y: 0, duration: .2, opacity:1, ease: 'Power4.easeOut'})
 }

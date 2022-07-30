@@ -37,146 +37,50 @@ export class Card extends PIXI.Sprite {
 
     onDragStart(event) {
         parent = this.parent
+
         parentX = this.parent.x
-        parentY = this.parent instanceof DeckOpen
-            ? game.deckOpen.y
-            : this.parent.y + (this.parent.children.length - 2) * 35
+        parentY = this.isCardFromReel() ? this.parent.y + (this.parent.children.length - 2) * 35 : game.deckOpen.y
 
-        if ((parent.children.indexOf(this) === parent.children.length - 1) && !(parent instanceof Home)) { //is single Card
-            this.position.set(parentX, parentY)
-            app.stage.addChild(this)
-            this.zIndex = 10
+       this.isSingleCard() ? startSingleCard(this): startCortage(this)
 
-        } else if(parent instanceof Home){
-            this.position.set(parentX, this.parent.y)
-            app.stage.addChild(this)
-
-        } else{ //is cortage
-
-            this.cortaging = true
-            let cortageSize = parent.children.indexOf(this) - parent.children.length
-
-            parentY = parent.children[parent.children.indexOf(this)].y
-            this.cortage = [...parent.children.slice(cortageSize)]
-
-            app.stage.addChild(...this.cortage)
-
-            this.cortage.forEach((card, i) => {
-                card.x = parentX
-                card.y = parentY + 170 + (i) * 35
-                card.zIndex = 10
-            })
-        }
         this.data = event.data;
         this.dragging = true;
-        clickSound.play()
 
         const newPosition = this.data.getLocalPosition(this.parent);
         startX = this.x
         startY = this.y
         deltaX = this.x - newPosition.x
         deltaY = this.y - newPosition.y
+
+        clickSound.play()
+
     }
 
     onDragMove() {
         if (this.dragging) {
-
             const newPosition = this.data.getLocalPosition(this.parent);
 
             if (this.cortaging) {
-
                 this.cortage.forEach((card, i) => {
                     card.x = newPosition.x + deltaX
                     card.y = newPosition.y + deltaY + i * 35
                 })
             } else {
-                this.x = newPosition.x + deltaX
-                this.y = newPosition.y + deltaY
+                this.position.set(newPosition.x + deltaX, newPosition.y + deltaY)
             }
         }
     }
 
     onDragEnd() {
-        if (this.dragging && !this.cortaging) {
-            let backCardFlag = true
-            game.homes.forEach(home => {
-                if (isAtHome(this, home)) {
-                    this.position.set(0, 0)
-                    cardTake.play()
-                    home.addChild(this)
-                    backCardFlag = false
-                    if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
-                    winAnimation()
-                }
-            })
+        if (this.dragging) {
 
-            game.reels.forEach(reel => {
-                if (isAtReel(this, reel)) {
-                    this.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
-                    reel.addChild(this)
-                    cardTake.play()
-                    backCardFlag = false
-                    if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
-                }
-            })
+            this.cortaging ? endCortage(this) : endSingleCard(this)
 
-            if (backCardFlag) {
-                backCardSound.currentTime = 0
-                backCardSound.play()
-                gsap.to(this, {
-                    pixi: {x: startX, y: startY},
-                    onComplete: () => {
-                        this.x = 0
-                        if (parent instanceof Home || parent instanceof DeckOpen){
-                            this.y = 0
-                        } else {
-                            this.y = 35 * (parent.children.length - 1);
-                        }
-                        backCardSound.pause()
-                        parent.addChild(this)
-                    },
-                    duration: 0.2
-                })
-            }
         }
-        if (this.dragging && this.cortaging) { //with cortage
-            let backCortageFlag = true
 
-            game.reels.forEach(reel => {
-                if (isAtReel(this, reel)) {
-                    this.cortage.forEach((card, i) => {
-                        card.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
-                        reel.addChild(card)
-                    })
-                    this.cortage = []
-                    this.cortaging = false
-                    backCortageFlag = false
-                    if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
-                }
-            })
-
-            if (backCortageFlag) {
-                backCardSound.currentTime = 0
-                backCardSound.play()
-                this.cortage.forEach((card, i) => {
-                    gsap.to(card, {
-                        pixi: {x: startX, y: startY + i * 35,},
-                        onComplete: () => {
-                            card.x = 0
-                            card.y = 35 * (parent.children.length - 1);
-                            backCardSound.pause()
-                            parent.addChild(card)
-
-                            this.cortage = []
-                            this.cortaging = false
-                        },
-                        duration: 0.2
-                    })
-                })
-            }
-        }
         this.dragging = false;
         this.data = null;
+
     }
 
     onOver() {
@@ -187,6 +91,14 @@ export class Card extends PIXI.Sprite {
     onOut() {
         this.glow.visible = false
         this.glow.alpha = 0
+    }
+
+    isCardFromReel(){
+        return this.parent instanceof Reel
+    }
+
+    isSingleCard(){
+        return (parent.children.indexOf(this) === parent.children.length - 1)
     }
 
     open() {
@@ -217,7 +129,105 @@ export class Card extends PIXI.Sprite {
 }
 
 
-
-function endForSingleCards(){
-
+function startSingleCard(card) {
+    card.position.set(parentX, parentY)
+    app.stage.addChild(card)
+    card.zIndex = 10
 }
+
+function startCortage(currentCard) {
+    currentCard.cortaging = true
+    let cortageSize = parent.children.indexOf(currentCard) - parent.children.length
+
+    parentY = parent.children[parent.children.indexOf(currentCard)].y
+    currentCard.cortage = [...parent.children.slice(cortageSize)]
+
+    app.stage.addChild(...currentCard.cortage)
+
+    currentCard.cortage.forEach((card, i) => {
+        card.x = parentX
+        card.y = parentY + 170 + (i) * 35
+        card.zIndex = 10
+    })
+}
+
+function endSingleCard(card){
+    let backCardFlag = true
+    game.homes.forEach(home => {
+        if (isAtHome(card, home)) {
+            card.position.set(0, 0)
+            cardTake.play()
+            home.addChild(card)
+            backCardFlag = false
+            if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
+            winAnimation()
+        }
+    })
+
+    game.reels.forEach(reel => {
+        if (isAtReel(card, reel)) {
+            card.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
+            reel.addChild(card)
+            cardTake.play()
+            backCardFlag = false
+            if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
+        }
+    })
+
+    if (backCardFlag) {
+        backCardSound.currentTime = 0
+        backCardSound.play()
+        gsap.to(card, {
+            pixi: {x: startX, y: startY},
+            onComplete: () => {
+                card.x = 0
+                if (parent instanceof Home || parent instanceof DeckOpen){
+                    card.y = 0
+                } else {
+                    card.y = 35 * (parent.children.length - 1);
+                }
+                backCardSound.pause()
+                parent.addChild(card)
+            },
+            duration: 0.2
+        })
+    }
+}
+
+function endCortage(currentCard) {
+    let backCortageFlag = true
+
+    game.reels.forEach(reel => {
+        if (isAtReel(currentCard, reel)) {
+            currentCard.cortage.forEach((card, i) => {
+                card.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
+                reel.addChild(card)
+            })
+            currentCard.cortage = []
+            currentCard.cortaging = false
+            backCortageFlag = false
+            if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
+        }
+    })
+
+    if (backCortageFlag) {
+        backCardSound.currentTime = 0
+        backCardSound.play()
+        currentCard.cortage.forEach((card, i) => {
+            gsap.to(card, {
+                pixi: {x: startX, y: startY + i * 35,},
+                onComplete: () => {
+                    card.x = 0
+                    card.y = 35 * (parent.children.length - 1);
+                    backCardSound.pause()
+                    parent.addChild(card)
+
+                    currentCard.cortage = []
+                    currentCard.cortaging = false
+                },
+                duration: 0.2
+            })
+        })
+    }
+}
+

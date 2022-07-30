@@ -1,11 +1,14 @@
 import {textures} from "../app.js";
 import {data} from "../../data/data.js";
-import {mainMusic, winMusic} from "../sounds/sounds.js";
+import {clickSound, mainMusic, winMusic} from "../sounds/sounds.js";
 
 export class Btn extends PIXI.Container{
 
     constructor(name, x = 0, callback = () =>{console.log('no func')}) {
         super()
+
+        this.callback = callback
+
         this.sprite = new PIXI.Sprite(textures[name])
         this.sprite.anchor.set(0.5)
 
@@ -34,9 +37,20 @@ export class Btn extends PIXI.Container{
 
         this.addChild(this.sprite, this.mask, this.point)
 
-        this.on('pointerover', this.onOver);
-        this.on('pointerout', this.onOut);
-        this.on('pointerdown', callback);
+        this.on('pointerover', this.onOver)
+            .on('pointerout', this.onOut)
+            .on('pointerdown', this.onDown)
+            .on('pointerup', this.onUp)
+    }
+
+    onDown(){
+        clickSound.currentTime = 0
+        clickSound.play()
+        this.callback()
+    }
+
+    onUp(){
+        clickSound.pause()
     }
 
     onOver(){
