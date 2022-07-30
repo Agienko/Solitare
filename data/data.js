@@ -3,7 +3,7 @@ export const data = {
         backgroundColor: '0x008732',
         width: 1280,
         height: 720,
-        antialias: true
+        antialias: true,
     },
     btns:{
         x:0,

@@ -1,5 +1,5 @@
 import {textures} from "../app.js";
-import {Card} from "./Card.js";
+import {Card} from "./Card/Card.js";
 
 export class Deck {
 

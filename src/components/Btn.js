@@ -1,6 +1,6 @@
 import {textures} from "../app.js";
 import {data} from "../../data/data.js";
-import {clickSound, mainMusic, winMusic} from "../sounds/sounds.js";
+import {clickSound} from "../sounds/sounds.js";
 
 export class Btn extends PIXI.Container{
 
@@ -61,9 +61,7 @@ export class Btn extends PIXI.Container{
         gsap.to(this, data.btns.onOut)
     }
 
-    toggleSound(){
-        this.point.visible ? mainMusic.play() : mainMusic.pause();
-        !this.point.visible && winMusic.pause()
+    togglePoint(){
         this.point.visible = !this.point.visible
     }
 

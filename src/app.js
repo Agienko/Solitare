@@ -1,6 +1,6 @@
 import {data} from '../data/data.js'
 import {loader} from "./loader/loader.js";
-import {Game} from "./game/gameDescriptor.js";
+import {Game} from "./game/GameDescriptor.js";
 
 export let  game, textures
 export const app = new PIXI.Application(data.canvas)

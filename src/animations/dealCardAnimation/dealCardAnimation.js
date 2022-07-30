@@ -1,5 +1,5 @@
-import {game} from "../app.js";
-import {reloadDeck} from "../sounds/sounds.js";
+import {game} from "../../app.js";
+import {reloadDeck} from "../../sounds/sounds.js";
 
 export const dealCardAnimation = () =>{
 

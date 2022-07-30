@@ -8,24 +8,28 @@ import {DeckClose} from "../components/DeckClose.js";
 import {DeckOpen} from "../components/DeckOpen.js";
 import {Home} from "../components/Home.js";
 import {Reel} from "../components/Reel.js";
-import {mainMusic} from "../sounds/sounds.js";
 import {openPopap} from "../popap/popap.js";
-import {removeWinAnimation} from "../animations/winAnimation.js";
-import {dealCardAnimation} from "../animations/dealCardAnimation.js";
+import {removeWinAnimation} from "../animations/winAnimation/winAnimation.js";
+import {dealCardAnimation} from "../animations/dealCardAnimation/dealCardAnimation.js";
+import {toggleSounds} from "../sounds/sounds.js";
+import {Memory} from "./MemoryDescriptor.js";
+import {Clock} from "../components/Clock.js";
 
 export class Game {
 
     constructor() {
+        this.memory = new Memory()
         this.layout = []
         this.deck = new Deck()
         this.deckClose = new DeckClose()
         this.deckOpen = new DeckOpen()
         this.maskCard = new MaskCard()
+        this.clock = new Clock()
         this.btns = [
         new Btn(NEW_GAME_BTN, data.btns.newGameBtn.x, () => this.newGame()),
         new Btn(REPLAY_BTN, data.btns.replayBtn.x, () => this.replayGame()),
-        new Btn(BACK_BTN, data.btns.backBtn.x),
-        new Btn(SOUND_BTN, data.btns.soundBtn.x, () => this.btns[3].toggleSound()),
+        new Btn(BACK_BTN, data.btns.backBtn.x, () => this.memory.backMove()),
+        new Btn(SOUND_BTN, data.btns.soundBtn.x, () => toggleSounds()),
         new Btn(INGO_BTN, data.btns.infoBtn.x, () => openPopap())
     ]
         this.homes = [
@@ -49,7 +53,7 @@ export class Game {
         this.btns.forEach(btn => app.stage.addChild(btn))
         this.homes.forEach(home=> app.stage.addChild(home))
         this.reels.forEach(reel => app.stage.addChild(reel))
-        app.stage.addChild(this.deckClose, this.deckOpen, this.maskCard)
+        app.stage.addChild(this.deckClose, this.deckOpen, this.maskCard, this.clock)
     }
 
     newGame() {
@@ -58,7 +62,7 @@ export class Game {
         this.layout = this.deck.newLayout()
         removeWinAnimation()
         this.deal()
-        mainMusic.play()
+        this.clock.reload()
     }
 
     replayGame(){
