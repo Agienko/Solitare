@@ -1,4 +1,4 @@
-import {app} from "../../../app.js";
+import {app, game} from "../../../app.js";
 
 export const startCortage = (currentCard, parent) => {
 
@@ -7,6 +7,8 @@ export const startCortage = (currentCard, parent) => {
 
     currentCard.parentY = parent.children[parent.children.indexOf(currentCard)].y
     currentCard.cortage = [...parent.children.slice(cortageSize)]
+
+    game.memory.add(currentCard.cortage, parent)// memory..............................................
 
     app.stage.addChild(...currentCard.cortage)
 

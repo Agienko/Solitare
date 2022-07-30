@@ -27,6 +27,9 @@ export class DeckClose extends PIXI.Container{
             .on('pointerover', this.onOver)
             .on('pointerout', this.onOut)
     }
+    last(){
+       return  this.children[this.children.length - 1]
+    }
 
     animate(delay, callback = function (){}){
 
@@ -63,7 +66,11 @@ export class DeckClose extends PIXI.Container{
                 },
                 onComplete(){
                     upperCard.x = 0
+                    const parent = upperCard.parent
                     game.deckOpen.addChild(upperCard)
+
+                    game.memory.add(upperCard, parent)// memory.....................................................
+
                     backCardSound.pause()
                     interactiveOn()
                 }
@@ -72,9 +79,13 @@ export class DeckClose extends PIXI.Container{
 
                game.deckOpen.children.forEach(card => card.close())
 
+
+
                while (game.deckOpen.children.length > 0) {
                    game.deckClose.addChild(game.deckOpen.children.pop())
                }
+
+            game.memory.add(game.deckClose.children.slice(2).reverse(), game.deckOpen)// memory..................................
 
                gsap.from(game.deckClose.children.slice(2).reverse(), {
                    pixi: {x: 115},

@@ -1,6 +1,6 @@
 import {game} from "../../../app.js";
-import {isAtReel} from "../../../helpers/reelTranslateHelpers.js";
 import {backCardSound, cardTake} from "../../../sounds/sounds.js";
+import {isAtReel} from "../../../helpers/reelTranslateHelpers.js";
 import {Reel} from "../../Reel.js";
 
 export function endCortage(currentCard, parent) {
@@ -25,15 +25,24 @@ export function endCortage(currentCard, parent) {
     if (backCortageFlag) {
         backCardSound.currentTime = 0
         backCardSound.play()
+
+        game.memory.remove()// memory.............................................................................
+
         currentCard.cortage.forEach((card, i) => {
             gsap.to(card, {
-                pixi: {x: currentCard.startX, y: currentCard.startY + i * 35,},
+                pixi: {x: currentCard.startX, y: currentCard.startY + i * 35},
+                onStart: () =>{
+                  card.interactive = false
+                },
                 onComplete: () => {
                     card.x = 0
                     card.y = 35 * (parent.children.length - 1);
                     backCardSound.pause()
                     parent.addChild(card)
 
+
+
+                    card.interactive = true
                     currentCard.cortage = []
                     currentCard.cortaging = false
                 },

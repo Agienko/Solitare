@@ -1,6 +1,7 @@
 import {app} from "../app.js";
 import {data} from "../../data/data.js";
 import {BACK_BTN, INGO_BTN, NEW_GAME_BTN, REPLAY_BTN, SOUND_BTN} from "../constants/constants.js";
+import {Clock} from "../components/Clock.js";
 import {Deck} from "../components/Deck.js";
 import {MaskCard} from "../components/MaskCard.js";
 import {Btn} from "../components/Btn.js";
@@ -12,8 +13,8 @@ import {openPopap} from "../popap/popap.js";
 import {removeWinAnimation} from "../animations/winAnimation/winAnimation.js";
 import {dealCardAnimation} from "../animations/dealCardAnimation/dealCardAnimation.js";
 import {toggleSounds} from "../sounds/sounds.js";
-import {Memory} from "./MemoryDescriptor.js";
-import {Clock} from "../components/Clock.js";
+import {Memory} from "./Memory.js"
+
 
 export class Game {
 
@@ -28,7 +29,7 @@ export class Game {
         this.btns = [
         new Btn(NEW_GAME_BTN, data.btns.newGameBtn.x, () => this.newGame()),
         new Btn(REPLAY_BTN, data.btns.replayBtn.x, () => this.replayGame()),
-        new Btn(BACK_BTN, data.btns.backBtn.x, () => this.memory.backMove()),
+        new Btn(BACK_BTN, data.btns.backBtn.x, () => this.memory.back()),
         new Btn(SOUND_BTN, data.btns.soundBtn.x, () => toggleSounds()),
         new Btn(INGO_BTN, data.btns.infoBtn.x, () => openPopap())
     ]
