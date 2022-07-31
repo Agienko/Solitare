@@ -31,17 +31,12 @@ export function endCortage(currentCard, parent) {
         currentCard.cortage.forEach((card, i) => {
             gsap.to(card, {
                 pixi: {x: currentCard.startX, y: currentCard.startY + i * 35},
-                onStart: () =>{
-                  card.interactive = false
-                },
+                onStart: () => card.interactive = false,
                 onComplete: () => {
                     card.x = 0
                     card.y = 35 * (parent.children.length - 1);
                     backCardSound.pause()
                     parent.addChild(card)
-
-
-
                     card.interactive = true
                     currentCard.cortage = []
                     currentCard.cortaging = false

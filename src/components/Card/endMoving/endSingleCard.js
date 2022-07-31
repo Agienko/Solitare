@@ -10,7 +10,6 @@ export function endSingleCard(card, parent){
 
     let backCardFlag = true
 
-
     game.homes.forEach(home => {
         if (isAtHome(card, home)) {
             card.position.set(0, 0)
@@ -26,9 +25,7 @@ export function endSingleCard(card, parent){
         if (isAtReel(card, reel)) {
             card.position.set(0, reel.isEmpty() ? 0 : reel.last().y + 35)
             reel.addChild(card)
-
             cardTake.play()
-
             backCardFlag = false
             if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
         }
@@ -39,19 +36,14 @@ export function endSingleCard(card, parent){
         backCardSound.play()
         gsap.to(card, {
             pixi: {x: card.startX, y: card.startY},
-            onStart:() =>{
-                card.interactive = false
-            },
+            onStart:() => card.interactive = false,
             onComplete: () => {
                 card.x = 0
                 card.y = (parent instanceof Reel) ? 35 * (parent.children.length - 1) : 0
-
                 backCardSound.pause()
-
                 parent.addChild(card)
                 card.interactive = true
                 game.memory.remove()
-
             },
             duration: 0.2
         })

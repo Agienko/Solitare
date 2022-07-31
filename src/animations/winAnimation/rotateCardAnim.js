@@ -1,8 +1,11 @@
 import {game, textures} from "../../app.js";
+import {animationData} from "../../../data/animationData.js";
+
+let data = animationData.winAnimation.rotateCardAnim
 
 export const rotateCardAnim = (container, delay = 0, y = 100 , toRight = true) => {
 
-    container.zIndex = 201
+    container.zIndex = data.zIndex
     let cardNames = game.deck.saveTextures
     let randomTexture = cardNames[Math.floor(Math.random()*52)]
     let card = new PIXI.Sprite(textures[randomTexture])
@@ -13,20 +16,21 @@ export const rotateCardAnim = (container, delay = 0, y = 100 , toRight = true) =
 
     let rotation = gsap.to(card,{
         pixi:{angle: toRight ? 360 : -360},
-        duration: 2.33,
-        ease:'Linear.easeInOut',
-        repeat: -1
+        ...data.rotation
     })
 
     if(toRight){
-        gsap.to(card,{pixi:{x:1400}, delay: delay, duration: 3.5, ease:'Linear.easeInOut',
+        gsap.to(card,{
+            ...data.move, delay: delay,
             onComplete(){
                 rotation.pause()
                 card.destroy()
-            }
+            },
+
         })
     } else {
-        gsap.from(card,{pixi:{x:1400}, delay: delay, duration: 3.5, ease:'Linear.easeInOut',
+        gsap.from(card,{
+            ...data.move, delay: delay,
             onComplete(){
                 rotation.pause()
                 card.destroy()

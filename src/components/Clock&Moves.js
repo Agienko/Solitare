@@ -24,7 +24,7 @@ export class ClockMoves extends PIXI.Container{
         this.timeText = new PIXI.Text('00:00', this.style);
         this.timeText.position.set(1200, 0)
 
-        this.countText = new PIXI.Text('0 ход', this.style);
+        this.countText = new PIXI.Text('0 move', this.style);
         this.countText.position.set(1132, 0)
 
         this.addChild(this.countText, this.timeText)

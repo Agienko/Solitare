@@ -1,15 +1,16 @@
 import {game} from "../../app.js";
 import {reloadDeck} from "../../sounds/sounds.js";
+import {animationData} from "../../../data/animationData.js";
 
 export const dealCardAnimation = () =>{
-
+    let data = animationData.dealCardAnimation
     reloadDeck.currentTime = 0
     reloadDeck.play()
 
-    const reelDelayArr = [0, 0.1, 0.2, 0.4, 0.7, 1.1, 1.4]
+    const reelDelayArr = data.reelDelayArr
     reelDelayArr.forEach((delay, i) => game.reels[i].animate(delay))
-    game.deckClose.animate(1.6, unblockBtns)
-    game.maskCard.hide(2.0)
+    game.deckClose.animate(data.deckCloseAnimationDelay, unblockBtns)
+    game.maskCard.hide(data.maskCardDelay)
     game.btns[0].block()
     game.btns[1].block()
 

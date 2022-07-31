@@ -27,7 +27,7 @@ popap.innerHTML = `
         </ul>
         <h3> DEMO</h3>
          <ul>
-            <li>Wrire in console "demo(true)" to run win animation</li>
+            <li>After deal, write in console: "demo(true)", to run demo of win animation</li>
         </ul>
     </main>
     <footer>
