@@ -30,8 +30,6 @@ export class Card extends PIXI.Sprite {
         this.scale.set(0.6)
         this.close()
 
-        this.skewY = Math.PI/2
-
         this.glow = new Glow()
         this.addChild(this.glow)
 

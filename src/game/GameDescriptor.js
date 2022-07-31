@@ -58,6 +58,7 @@ export class Game {
     }
 
     newGame() {
+        this.memory.clear()
         this.deck.destroyCards()
         this.deck = new Deck()
         this.layout = this.deck.newLayout()
@@ -68,6 +69,7 @@ export class Game {
 
     replayGame(){
         if(this.hasSaveLayout()){
+            this.memory.clear()
             this.deck.destroyCards()
             this.layout = this.deck.replayLayout()
             removeWinAnimation()
