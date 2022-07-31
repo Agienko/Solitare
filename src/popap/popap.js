@@ -6,29 +6,34 @@ popap.dataset.close = true
 popap.innerHTML = `
   <div class="popapWindow" data-close="true">
      <header>
-         <div class="headerName" >Правила</div>
+         <div class="headerName" >Rools</div>
          <span class="headerClose" data-close="true">x</span>
      </header>
     <main>
-        <h2> ПАСЬЯНС КОСЫНКА </h2>
-        <p> Переместите все карты на основания</p>
-        <h3> ОСНОВАНИЯ <span>(верхний ряд)</span></h3>
+        <h2> SOLITAIRE </h2>
+        <p> Move all cards to foundations</p>
+        <h3> GROUNDS <span>(top row)</span></h3>
         <ul>
-         <li>Собирайте последовательности одной масти по возрастанию</li>
+         <li>Collect sequences of the same suit in ascending order</li>
         </ul>
-        <h3> ИГРОВОЕ ПОЛЕ</h3>
+        <h3> PLAYING FIELD</h3>
         <ul>
-            <li> Собирайте последовательности по убыванию чередуя цвет</li>
-            <li> Правильные последовательности можно перемещать полностью или частями</li>
+            <li> Collect sequences in descending order by alternating colors</li>
+            <li> Correct sequences can be moved in whole or in parts</li>
         </ul>
-        <h3> КОЛОДА</h3>
+        <h3> DECK</h3>
         <ul>
-            <li>Неограниченные пересдачи</li>
+            <li>Unlimited retakes</li>
+        </ul>
+        <h3> DEMO</h3>
+         <ul>
+            <li>Wrire in console "demo(true)" to run win animation</li>
         </ul>
     </main>
     <footer>
         <a href="https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%81%D1%8B%D0%BD%D0%BA%D0%B0_(%D0%BF%D0%B0%D1%81%D1%8C%D1%8F%D0%BD%D1%81)" target="_blank">Wiki</a>
-    </footer>           
+    </footer>        
+    <button class="closeBtn" data-close="true">close</button>   
   </div>
 `
 gsap.to(popap, { scale: 0, y: -400, duration: 0, opacity:0, ease: 'Power3.easeIn'})

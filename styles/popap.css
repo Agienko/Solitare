@@ -20,6 +20,8 @@
     border-radius: 12px;
     border: 3px solid #092d01;
     box-shadow: 2px 2px 5px rgb(9, 38, 1);
+    display: flex;
+    flex-direction: column;
 }
 .popapWindow header {
     color: white;
@@ -29,7 +31,7 @@
     padding: 5px 10px;
     margin: 2px;
     justify-content: space-between;
-    background-color: #255f18;
+    background-color: #2c851a;
 }
 .headerClose{
     user-select: none;
@@ -53,4 +55,16 @@ margin-top: 20px;
 }
 .popapWindow footer{
     margin: 30px;
+}
+.closeBtn{
+    align-self: center;
+    background-color: rgba(35, 105, 21, 0.94);
+    margin: 20px;
+    width: 60px;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+
 }

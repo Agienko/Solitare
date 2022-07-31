@@ -8,7 +8,7 @@ import {blurScene} from "./blurScene.js";
 
 let winSceneAnimation = new PIXI.Container()
 
-export const winAnimation =() =>{
+export const winAnimation =(demo = false) =>{
 
    winSceneAnimation = new PIXI.Container()
 
@@ -29,7 +29,7 @@ export const winAnimation =() =>{
       14.510, 14.939, 15.373, 15.582
    ]
 
-   if(game.checkWin()){
+   if(game.checkWin() || demo){
       winMusic.currentTime = 0
       winMusic.play()
 
@@ -58,3 +58,6 @@ export function removeWinAnimation(){
    winMusic.pause()
 
 }
+
+//run demo
+window.demo = winAnimation

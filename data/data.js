@@ -7,7 +7,7 @@ export const data = {
     },
     btns:{
         x:0,
-        y: 30,
+        y: 50,
         startAlpha: 0.9,
         maskRadius: 42,
         alpha: 0.9,

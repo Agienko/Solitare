@@ -1,7 +1,7 @@
 import {app} from "../app.js";
 import {data} from "../../data/data.js";
 import {BACK_BTN, INGO_BTN, NEW_GAME_BTN, REPLAY_BTN, SOUND_BTN} from "../constants/constants.js";
-import {Clock} from "../components/Clock.js";
+import {ClockMoves} from "../components/Clock&Moves.js";
 import {Deck} from "../components/Deck.js";
 import {MaskCard} from "../components/MaskCard.js";
 import {Btn} from "../components/Btn.js";
@@ -16,6 +16,7 @@ import {toggleSounds} from "../sounds/sounds.js";
 import {Memory} from "./Memory.js"
 
 
+
 export class Game {
 
     constructor() {
@@ -25,7 +26,8 @@ export class Game {
         this.deckClose = new DeckClose()
         this.deckOpen = new DeckOpen()
         this.maskCard = new MaskCard()
-        this.clock = new Clock()
+        this.clockMoves = new ClockMoves()
+
         this.btns = [
         new Btn(NEW_GAME_BTN, data.btns.newGameBtn.x, () => this.newGame()),
         new Btn(REPLAY_BTN, data.btns.replayBtn.x, () => this.replayGame()),
@@ -54,7 +56,7 @@ export class Game {
         this.btns.forEach(btn => app.stage.addChild(btn))
         this.homes.forEach(home=> app.stage.addChild(home))
         this.reels.forEach(reel => app.stage.addChild(reel))
-        app.stage.addChild(this.deckClose, this.deckOpen, this.maskCard, this.clock)
+        app.stage.addChild(this.deckClose, this.deckOpen, this.maskCard, this.clockMoves)
     }
 
     newGame() {
@@ -64,7 +66,7 @@ export class Game {
         this.layout = this.deck.newLayout()
         removeWinAnimation()
         this.deal()
-        this.clock.reload()
+        this.clockMoves.reload()
     }
 
     replayGame(){
