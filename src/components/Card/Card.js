@@ -6,7 +6,7 @@ import {clickSound} from "../../sounds/sounds.js";
 import {endSingleCard} from "./endMoving/endSingleCard.js";
 import {endCortage} from "./endMoving/endCortage.js";
 
-
+let count = 1
 let  parent
 
 export class Card extends PIXI.Sprite {
@@ -128,14 +128,13 @@ export class Card extends PIXI.Sprite {
     }
 
     open() {
+
         this.texture = this.openTexture
         this.interactive = true
         this.buttonMode = true
     }
 
     close() {
-
-
         this.texture = textures[BACK_CARD]
         this.interactive = false
         this.buttonMode = false
@@ -154,9 +153,41 @@ export class Card extends PIXI.Sprite {
         return card.texture.textureCacheIds[0].slice(-1)
     }
 
+    closeAnim(){
+        let card = this
+        gsap.to(card,{
+            pixi:{skewY: 90, x: card.width/2}, ease: 'Power1.easeIn', duration:0.07,
+            onComplete:() => {
+                gsap.to(card, {pixi:{skewY: 180, x: card.width}, duration: 0.05, ease: 'Power2.easeOut',
+                    onStart: () => card.close(),
+                    onComplete: () =>{
+                        card.x = 0
+                        card.skew.y = 0
+                    }
+                })
+            }
+        })
+    }
+
+    openAnim(){
+        if(this.isClose()) {
+            let card = this
+            card.x = card.width
+            card.skew.y = Math.PI
+            gsap.to(card, {
+                pixi: {skewY: 90, x: card.width / 2}, ease: 'Power1.easeIn', duration: 0.1,
+                onComplete: () => {
+                    card.open()
+                    gsap.to(card, {pixi: {skewY: 0, x: 0}, duration: 0.1, ease: 'Power2.easeOut'})
+                }
+            })
+        }
+    }
+    isClose(){
+      return this.texture.textureCacheIds[0] === BACK_CARD
+    }
+
 }
-
-
 
 
 

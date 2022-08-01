@@ -18,7 +18,7 @@ export function endCortage(currentCard, parent) {
             currentCard.cortaging = false
             backCortageFlag = false
 
-            if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
+            if (parent instanceof Reel && !parent.isEmpty()) parent.last().openAnim()
         }
     })
 

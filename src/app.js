@@ -6,7 +6,7 @@ export let  game, textures
 export const app = new PIXI.Application(data.canvas)
 app.stage.sortableChildren = true
 
-loader.load((i, res) => {
+loader.load((_, res) => {
     document.body.style.opacity = 1
     textures = res.atlas.textures
     game = new Game()

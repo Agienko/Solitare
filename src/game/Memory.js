@@ -56,7 +56,7 @@ export class Memory {
             ? 35 * (currentParent.children.length - 1 + cortageIndex)
             : cortageIndex * 35
 
-        if(currentParent instanceof Reel && !currentParent.isEmpty()) currentParent.last().close()
+        if(currentParent instanceof Reel && !currentParent.isEmpty()) currentParent.last().closeAnim()
 
         app.stage.addChild(current)
         current.position.set(global.x, global.y)

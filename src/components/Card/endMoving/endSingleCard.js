@@ -5,7 +5,6 @@ import {winAnimation} from "../../../animations/winAnimation/winAnimation.js";
 import {isAtReel} from "../../../helpers/reelTranslateHelpers.js";
 import {Reel} from "../../Reel.js";
 
-
 export function endSingleCard(card, parent){
 
     let backCardFlag = true
@@ -16,7 +15,7 @@ export function endSingleCard(card, parent){
             cardTake.play()
             home.addChild(card)
             backCardFlag = false
-            if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
+            if (parent instanceof Reel && !parent.isEmpty()  ) parent.last().openAnim()
             winAnimation()
         }
     })
@@ -27,7 +26,8 @@ export function endSingleCard(card, parent){
             reel.addChild(card)
             cardTake.play()
             backCardFlag = false
-            if (parent instanceof Reel && !parent.isEmpty()) parent.last().open()
+
+            if (parent instanceof Reel && !parent.isEmpty()) parent.last().openAnim()
         }
     })
 

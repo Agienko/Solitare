@@ -16,7 +16,6 @@ import {toggleSounds} from "../sounds/sounds.js";
 import {Memory} from "./Memory.js"
 
 
-
 export class Game {
 
     constructor() {
@@ -66,6 +65,7 @@ export class Game {
         this.layout = this.deck.newLayout()
         removeWinAnimation()
         this.deal()
+        this.clockMoves.go()
         this.clockMoves.reload()
     }
 

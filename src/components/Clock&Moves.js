@@ -29,7 +29,10 @@ export class ClockMoves extends PIXI.Container{
 
         this.addChild(this.countText, this.timeText)
 
-        app.ticker.add((delta)=>{
+        
+    }
+   go(){
+    app.ticker.add((delta)=>{
 
         let gameTime = new Date() - this.startDate
         let min = Math.floor(gameTime / 1000 / 60 );
@@ -40,7 +43,7 @@ export class ClockMoves extends PIXI.Container{
         this.timeText.text = ` ${min}:${sec}`
         this.countText.text = ` ${game.memory.getMovesCount()} move`
        })
-    }
+   }
     reload(){
         this.startDate = new Date()
     }
