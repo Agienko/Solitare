@@ -69,7 +69,13 @@ margin-top: 20px;
 
 }
 
-@media (max-width: 400px) {
+@media (max-width: 400px ) {
+    .popapWindow{
+        transform: scale(0.5);
+    }
+
+}
+@media (max-height: 520px) {
     .popapWindow{
         transform: scale(0.5);
     }
