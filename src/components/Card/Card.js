@@ -156,9 +156,9 @@ export class Card extends PIXI.Sprite {
     closeAnim(){
         let card = this
         gsap.to(card,{
-            pixi:{skewY: 90, x: card.width/2}, ease: 'Power1.easeIn', duration:0.07,
+            pixi:{skewY: 90, x: card.width/2}, ease: 'Power1.easeIn', duration:0.06,
             onComplete:() => {
-                gsap.to(card, {pixi:{skewY: 180, x: card.width}, duration: 0.05, ease: 'Power2.easeOut',
+                gsap.to(card, {pixi:{skewY: 180, x: card.width}, duration: 0.04, ease: 'Power2.easeOut',
                     onStart: () => card.close(),
                     onComplete: () =>{
                         card.x = 0
@@ -175,14 +175,15 @@ export class Card extends PIXI.Sprite {
             card.x = card.width
             card.skew.y = Math.PI
             gsap.to(card, {
-                pixi: {skewY: 90, x: card.width / 2}, ease: 'Power1.easeIn', duration: 0.1,
+                pixi: {skewY: 90, x: card.width / 2}, ease: 'Power1.easeIn', duration: 0.08,
                 onComplete: () => {
                     card.open()
-                    gsap.to(card, {pixi: {skewY: 0, x: 0}, duration: 0.1, ease: 'Power2.easeOut'})
+                    gsap.to(card, {pixi: {skewY: 0, x: 0}, duration: 0.08, ease: 'Power2.easeOut'})
                 }
             })
         }
     }
+
     isClose(){
       return this.texture.textureCacheIds[0] === BACK_CARD
     }

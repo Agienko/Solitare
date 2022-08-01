@@ -7,18 +7,18 @@ export const data = {
     },
     btns:{
         x:0,
-        y: 50,
+        y: 70,
         startAlpha: 0.9,
         maskRadius: 42,
         alpha: 0.9,
-        scale: 0.45,
+        scale: 0.65,
         onOver:{
-            pixi:{scale:0.48, alpha: 1},
+            pixi:{scale:0.75, alpha: 1},
             duration: 0.15,
             ease: 'Power1.easeIn'
         } ,
         onOut:{
-            pixi:{scale:0.45, alpha: 0.9},
+            pixi:{scale:0.65, alpha: 0.9},
             duration: 0.15,
             ease: 'Power1.easeOut'
         },
@@ -27,16 +27,16 @@ export const data = {
             x:50
         },
         replayBtn:{
-            x:110
+            x:130
         },
         backBtn:{
-            x:170
+            x:210
         },
         soundBtn:{
-            x:1160
+            x:1130
         },
         infoBtn:{
-            x:1230
+            x:1220
         },
     },
     deckClose:{
