@@ -28,11 +28,11 @@ export class Game {
         this.clockMoves = new ClockMoves()
 
         this.btns = [
-        new Btn(NEW_GAME_BTN, data.btns.newGameBtn.x, () => this.newGame()),
-        new Btn(REPLAY_BTN, data.btns.replayBtn.x, () => this.replayGame()),
-        new Btn(BACK_BTN, data.btns.backBtn.x, () => this.memory.back()),
-        new Btn(SOUND_BTN, data.btns.soundBtn.x, () => toggleSounds()),
-        new Btn(INGO_BTN, data.btns.infoBtn.x, () => openPopap())
+        new Btn(NEW_GAME_BTN, data.btns.newGameBtn.x, data.btns.newGameBtn.y, () => this.newGame()),
+        new Btn(REPLAY_BTN, data.btns.replayBtn.x, data.btns.replayBtn.y, () => this.replayGame()),
+        new Btn(BACK_BTN, data.btns.backBtn.x,data.btns.backBtn.y, () => this.memory.back()),
+        new Btn(SOUND_BTN, data.btns.soundBtn.x, data.btns.soundBtn.y,() => toggleSounds()),
+        new Btn(INGO_BTN, data.btns.infoBtn.x, data.btns.infoBtn.y,() => openPopap())
     ]
         this.homes = [
         new Home(1),

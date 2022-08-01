@@ -4,7 +4,7 @@ import {clickSound} from "../sounds/sounds.js";
 
 export class Btn extends PIXI.Container{
 
-    constructor(name, x = 0, callback = () =>{console.log('no func')}) {
+    constructor(name, x, y , callback) {
         super()
 
         this.callback = callback
@@ -27,7 +27,7 @@ export class Btn extends PIXI.Container{
         this.point.alpha = 0.7
         this.point.visible = false
 
-        this.position.set(x, data.btns.y)
+        this.position.set(x, y)
         this.scale.set(data.btns.scale)
         this.zIndex = 300
         this.alpha = data.btns.startAlpha

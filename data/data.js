@@ -6,37 +6,41 @@ export const data = {
         antialias: true,
     },
     btns:{
-        x:0,
-        y: 70,
         startAlpha: 0.9,
         maskRadius: 42,
         alpha: 0.9,
-        scale: 0.65,
+        scale: 0.9,
         onOver:{
-            pixi:{scale:0.75, alpha: 1},
+            pixi:{scale:1.15, alpha: 1},
             duration: 0.15,
             ease: 'Power1.easeIn'
         } ,
         onOut:{
-            pixi:{scale:0.65, alpha: 0.9},
+            pixi:{scale:0.9, alpha: 0.9},
             duration: 0.15,
             ease: 'Power1.easeOut'
         },
 
         newGameBtn:{
-            x:50
+            x:130,
+            y: 450
         },
         replayBtn:{
-            x:130
+            x:130,
+            y: 300
         },
         backBtn:{
-            x:210
+            x:130,
+            y: 150
         },
+
         soundBtn:{
-            x:1130
+            x:1180,
+            y: 150
         },
         infoBtn:{
-            x:1220
+            x:1180,
+            y: 400
         },
     },
     deckClose:{
