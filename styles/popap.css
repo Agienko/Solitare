@@ -68,3 +68,10 @@ margin-top: 20px;
     cursor: pointer;
 
 }
+
+@media (max-width: 400px) {
+    .popapWindow{
+        transform: scale(0.5);
+    }
+
+}
